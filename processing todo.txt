@@ -1,0 +1,16 @@
+- Item No to sku
+- Category to categories, format
+- Product Name to name, shorten
+- MSRP to msrp
+- Dropshipping Price to cost
+- Add price, calculate based on formula
+- Inventory Qty to quantity
+- Add enabled, calculate based on formula
+- Add images, concatenate Product Image columns
+- HTML Description to description
+- Packaging Length, Width, Height, Weight to length, width, height, weight
+- Add shippingGrouop, set to Doba
+- Find duplicate names, separate to a new array
+- Format first value
+- Format second value, unless empty or only duplicates
+- Copy name, description, categories, shippingGroup of one variant to the product list

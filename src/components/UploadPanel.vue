@@ -8,8 +8,9 @@ function processFile(event) {
     console.log('Wrong file type');
   } else {
     Papa.parse(file, {
+      header: true,
       complete: function (results, file) {
-        console.log(results);
+        console.log(results.data);
       },
     });
   }
