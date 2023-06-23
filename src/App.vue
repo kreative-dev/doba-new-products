@@ -1,9 +1,9 @@
 <script setup>
-  import UploadPanel from './components/UploadPanel.vue';
+  import AppMain from './components/AppMain.vue';
 </script>
 
 <template>
-  <UploadPanel></UploadPanel>
+  <AppMain></AppMain>
 </template>
 
 <style scoped>

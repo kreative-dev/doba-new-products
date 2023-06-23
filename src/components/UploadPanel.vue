@@ -1,22 +1,88 @@
 <script setup>
 import * as Papa from 'papaparse';
+import { ref } from 'vue';
+
+const emit = defineEmits(["submit"]);
+
+const error = ref("");
+
+const filteredData = ref([]);
+const fileName = ref("");
 
 function processFile(event) {
   let file = event.target.files[0];
 
   if (file.type !== 'text/csv') {
-    console.log('Wrong file type');
+    error.value = "File is not a CSV"
   } else {
     Papa.parse(file, {
       header: true,
+      skipEmptyLines: true,
       complete: function (results, file) {
-        console.log(results.data);
+        fileName.value = file.name;
+        checkData(results.data)
       },
     });
   }
 }
+
+function checkData(data) {
+  // Check if SPU NO is on sheet, if not, show error
+  if (!Object.keys(data[0]).includes("SPU NO")) {
+    error.value = "Not a Doba spreadsheet"
+    return
+  }
+
+  // Filter out relevent data, and move into filteredData
+  data.forEach(product => {
+    let filteredProduct = {
+      sku: product["Item No."],
+      categories: product["Category"].replaceAll(">>", " > "),
+      name: product["Product Name"],
+      msrp: product["MSRP (US$)"],
+      cost: product["Dropshipping Price (US$)"],
+      shippingCost: product["Estimate Shipping Cost (US$)"],
+      quantity: product["Inventory Qty"],
+      description: product["HTML Description"],
+      length: product["Packaging Size-Length"],
+      width: product["Packaging Size-Width"],
+      height: product["Packaging Size-Height"],
+      weight: product["Packaging Weight"],
+      shippingGroup: "Doba",
+      optionOne: product["Variation Theme 1"],
+      variantOne: product["Variation Value 1"],
+      optionTwo: product["Variation Theme 2"],
+      variantTwo: product["Variation Value 2"],
+    }
+
+    // Merge image columns together and add to filteredProduct
+    let imageLinks = product["Product Images 1"];
+
+    for (let i = 2; i <= 6; i++) {
+      if(product["Product Images " + i] !== "") {
+        imageLinks += ";" + product["Product Images " + i];
+      }
+    }
+
+    filteredProduct.images = imageLinks;
+
+    filteredData.value.push(filteredProduct);
+  });
+}
+
+function submitFile() {
+  emit('submit', filteredData);
+}
+
 </script>
 
 <template>
-  <input type="file" accept="text/csv" @change="processFile" />
+  <div v-if="filteredData.length === 0">
+    <input type="file" accept="text/csv" @change="processFile" />
+    <p v-if="error">{{ error }}</p>
+  </div>
+  <div v-else>
+    <p>{{ fileName }}</p>
+    <button @click="submitFile">Next</button>
+  </div>
 </template>
