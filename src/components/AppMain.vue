@@ -17,7 +17,7 @@
 
   function receiveData(filteredData) {
     data.value.filteredData = filteredData;
-    finalData = processData(data.value);
+    data.value.finalData = processData(data.value);
   }
 </script>
 
