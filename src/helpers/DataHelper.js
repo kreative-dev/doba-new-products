@@ -8,13 +8,6 @@ export function processData(data) {
 
   // Loop through filtered products
   data.filteredData.forEach((product) => {
-    // TODO! If automated pricing, add prices to product
-    product.price = product.cost * 1.25;
-
-    // TODO! If automated enabling, add enabled to product
-    product.enabled = product.quantity > 0 ? 0 : 1;
-
-    
 
     // Check if product is a variant, if true, add to variant data, otherwise, add to productData
     checkVariant(product, data.filteredData)
@@ -25,7 +18,7 @@ export function processData(data) {
   // Add variantsFound to productData list
   finalData.productData = finalData.productData.concat(variantsFound);
 
-  console.log(finalData.productData);
+  return finalData;
 }
 
 function checkVariant(product, filteredData) {
@@ -43,6 +36,7 @@ function checkVariant(product, filteredData) {
 
     Object.keys(product).forEach((key) => tempVariant[key] = "");
 
+    // Add variant data
     tempVariant.name = product.name;
     tempVariant.description = product.description;
     tempVariant.categories = product.categories;

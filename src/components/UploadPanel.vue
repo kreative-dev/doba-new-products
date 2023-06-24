@@ -2,7 +2,7 @@
 import * as Papa from 'papaparse';
 import { ref } from 'vue';
 
-const emit = defineEmits(["submit"]);
+const emit = defineEmits(["submitFile"]);
 
 const error = ref("");
 
@@ -37,13 +37,13 @@ function checkData(data) {
   data.forEach(product => {
     let filteredProduct = {
       sku: product["Item No."],
-      categories: product["Category"].replaceAll(">>", " > "),
-      name: product["Product Name"],
+      name: product["Product Name"].slice(0, 150),
+      description: product["HTML Description"],
+      categories: product["Category"].replaceAll(">>", " > "),      
       msrp: product["MSRP (US$)"],
       cost: product["Dropshipping Price (US$)"],
       shippingCost: product["Estimate Shipping Cost (US$)"],
       quantity: product["Inventory Qty"],
-      description: product["HTML Description"],
       length: product["Packaging Size-Length"],
       width: product["Packaging Size-Width"],
       height: product["Packaging Size-Height"],
@@ -71,7 +71,7 @@ function checkData(data) {
 }
 
 function submitFile() {
-  emit('submit', filteredData);
+  emit('submitFile', filteredData);
 }
 
 </script>
