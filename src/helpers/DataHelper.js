@@ -1,14 +1,13 @@
 const variantNames = [];
 const variantsFound = [];
+const mainVariants = [];
 
 export function processData(data) {
-
   // finalData will be returned back to AppMain
-  let finalData = { productData: [], variantData: [] };
+  let finalData = { productData: [], variantData: [], mainVariants: [] };
 
   // Loop through filtered products
   data.filteredData.forEach((product) => {
-
     // Check if product is a variant, if true, add to variant data, otherwise, add to productData
     checkVariant(product, data.filteredData)
       ? finalData.variantData.push(product)
@@ -17,6 +16,9 @@ export function processData(data) {
 
   // Add variantsFound to productData list
   finalData.productData = finalData.productData.concat(variantsFound);
+
+  // add main variants to finalData
+  finalData.mainVariants = mainVariants;
 
   return finalData;
 }
@@ -29,12 +31,16 @@ function checkVariant(product, filteredData) {
 
   // check for a new variant, if found, add relevant data to variantName and variantsFound
   if (filteredData.filter((p) => p.name === product.name).length > 1) {
+    // add to variantNames so it skips the duplicates
     variantNames.push(product.name);
+
+    // add variant sku to main variants
+    mainVariants.push(product.sku);
 
     // add empty data to temp variant
     let tempVariant = {};
 
-    Object.keys(product).forEach((key) => tempVariant[key] = "");
+    Object.keys(product).forEach((key) => (tempVariant[key] = ''));
 
     // Add variant data
     tempVariant.name = product.name;
@@ -43,6 +49,7 @@ function checkVariant(product, filteredData) {
     tempVariant.shippingGroup = product.shippingGroup;
 
     variantsFound.push(tempVariant);
+
     return true;
   }
 

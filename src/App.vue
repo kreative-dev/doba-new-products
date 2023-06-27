@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <AppMain></AppMain>
+  <AppMain class="h-full"></AppMain>
 </template>
 
 <style scoped>
