@@ -79,6 +79,12 @@ function checkData(data) {
   });
 }
 
+function resetFile() {
+  filteredData.value = [];
+  error.value = '';
+  fileName = '';
+}
+
 function submitFile() {
   emit('submitFile', filteredData);
 }
@@ -88,17 +94,21 @@ function submitFile() {
   <PanelTemplate>
     <template v-slot:intro>
       <p>This tool can be used to format a Doba Product Feed spreadsheet for Warhead.  In most cases, the formatted spreadsheet can be then imported directly into Warhead. For a video on how to use this tool, <a href="/">click here</a>.</p>
-      <p>The first step is to upload a Doba spreadsheet file, which can be download from the Doba Inventory List. Make sure to select the Product Feeds File file type, and the Products List(.csv) format</p>
+      <p>The first step is to upload a Doba spreadsheet file, which can be download from the Doba Inventory List. Make sure to select the Product Feeds File file type, and the Products List(.csv) format when downloading from Doba.</p>
     </template>
     <template v-slot:main>
       <div v-if="filteredData.length === 0">
-        <input type="file" accept="text/csv" @change="processFile" class="invisible w-32 file:visible" />
+        <label for="file-upload" class="btn-primary">Upload Doba File</label>
+        <input id="file-upload" type="file" accept="text/csv" @change="processFile" class="hidden" />
         <p v-if="error">{{ error }}</p>
       </div>
       <div v-else>
-        <p>{{ fileName }}</p>
-        <button @click="submitFile">Next</button>
+        <p class="border border-slate-800/75 rounded-md bg-slate-200 px-4 py-1 w-fit ">{{ fileName }}</p>
       </div>
+    </template>
+    <template v-slot:buttons v-if="filteredData.length > 0">
+      <button @click="resetFile" class="btn-primary">Change File</button>
+      <button @click="submitFile" class="btn-primary">Next</button>
     </template>
   </PanelTemplate>
 </template>

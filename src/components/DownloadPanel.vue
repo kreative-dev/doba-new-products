@@ -1,8 +1,11 @@
 <script setup>
 import { saveAs } from 'file-saver';
 import * as Papa from 'papaparse';
+import PanelTemplate from './PanelTemplate.vue';
 
 const props = defineProps(['data']);
+
+const emit = defineEmits(['changePanel']);
 
 // Create and save the product download, including general products for variants
 function saveData(isVariant) {
@@ -59,9 +62,13 @@ function saveData(isVariant) {
     // only do automated pricing if selected in options, otherwise add using cost, or blank if variant
     if (props.data.options.pricingToggle == 'Yes' && product.cost !== '') {
       newProduct.price =
-        parseFloat(product.cost) * (1.0 + parseFloat(props.data.options.pricingValue)/100.0) +
+        parseFloat(product.cost) *
+          (1.0 + parseFloat(props.data.options.pricingValue) / 100.0) +
         parseFloat(product.shippingCost);
-    } else if (props.data.options.pricingToggle == 'Yes' && product.cost === '') {
+    } else if (
+      props.data.options.pricingToggle == 'Yes' &&
+      product.cost === ''
+    ) {
       newProduct.price = 0;
     } else {
       newProduct.price = product.cost;
@@ -93,75 +100,28 @@ function saveData(isVariant) {
   saveAs(productCSV, fileName);
 }
 
-// function saveProducts() {
-//   // TODO - Add prices and enabled to products if selected in options
-//   props.data.finalData.productData.forEach((product) => {
-//     if (product.cost !== '') {
-//       product.price =
-//         parseFloat(product.cost) * 1.25 + parseFloat(product.shippingCost);
-//     } else {
-//       product.price = 0;
-//     }
-
-//     if (product.quantity !== '') {
-//       product.enabled = parseInt(product.quantity) > 0 ? 1 : 0;
-//     } else {
-//       product.enabled = 1;
-//     }
-//   });
-
-//   // Set up file with papaparse
-//   const productCSV = new Blob(
-//     [Papa.unparse(props.data.finalData.productData)],
-//     {
-//       type: 'text/csv',
-//     }
-//   );
-
-//   saveAs(productCSV, 'doba-products');
-// }
-
-// function saveVariants() {
-//   // TODO - Add prices, enabled if selected in options, add values
-//   props.data.finalData.variantData.forEach((variant) => {
-//     if (variant.cost != '') {
-//       variant.price =
-//         parseFloat(variant.cost) * 1.25 + parseFloat(variant.shippingCost);
-//     } else {
-//       variant.price = 0;
-//     }
-
-//     if (variant.quantity !== '') {
-//       variant.enabled = parseInt(variant.quantity) > 0 ? 1 : 0;
-//     } else {
-//       variant.enabled = 1;
-//     }
-
-//     // Replace name with productName
-//     variant.productName = variant.name;
-//     delete variant.name;
-
-//     // Add values
-//     variant.value = variant.optionOne + ': ' + variant.variantOne;
-//     variant.value +=
-//       variant.optionTwo === ''
-//         ? ''
-//         : ';' + variant.optionTwo + ': ' + variant.variantTwo;
-//   });
-
-//   // Set up file with papaparse
-//   const variantCSV = new Blob(
-//     [Papa.unparse(props.data.finalData.variantData)],
-//     {
-//       type: 'text/csv',
-//     }
-//   );
-
-//   saveAs(variantCSV, 'doba-variants');
-// }
+function changePanel(newPanel) {
+  emit('changePanel', newPanel);
+}
 </script>
 
 <template>
-  <button @click="saveData(false)">Save Products File</button>
-  <button @click="saveData(true)">Save Variants File</button>
+  <PanelTemplate>
+    <template v-slot:intro>
+      <p>The files are ready to be downloaded below. <span v-if="props.data.options.pricingToggle === 'No'">Since you did not use automated prices, you will have to open the files and add pricing.</span> The files can be imported without any other changes. First, import the products file with the Products Data Type. Then import the variants file with the Variants Data Type.</p>
+    </template>
+    <template v-slot:main>
+      <div class="flex space-x-6">
+        <button @click="saveData(false)" class="btn-primary">
+          Download Products File
+        </button>
+        <button @click="saveData(true)" class="btn-primary">
+          Download Variants File
+        </button>
+      </div>
+    </template>
+    <template v-slot:buttons>
+      <button @click="changePanel('OptionsPanel')" class="btn-primary">Back</button>
+    </template>
+  </PanelTemplate>
 </template>

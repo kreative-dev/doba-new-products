@@ -1,13 +1,15 @@
 <script setup>
-defineProps(['selectOptions']);
-defineEmits(['update:modelValue']);
+const props = defineProps(['selectOptions', 'inputID']);
+const emit = defineEmits(['update:modelValue']);
 
 
 </script>
 
 <template>
-  <label for="select"><slot>Label</slot></label>
-  <select id="select" @change="$emit('update:modelValue', $event.target.value)">
+  <div class="flex space-x-10 justify-between w-96">
+  <label :for="inputID"><slot>Label</slot></label>
+  <select :id="inputID" @change="$emit('update:modelValue', $event.target.value)" class="w-16">
     <option v-for="option in selectOptions">{{ option }}</option>
   </select>
+  </div>
 </template>
