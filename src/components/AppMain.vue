@@ -38,7 +38,7 @@ function changePanel(newPanel) {
 
 <template>
   <div
-    class="bg-slate-300 w-11/12 mx-auto flex flex-col items-center font-inter"
+    class="w-11/12 mx-auto flex flex-col items-center font-inter"
   >
     <h1 class="font-bold text-3xl mt-8 underline ">Doba New Products Tool</h1>
     <div class="mt-12 w-2/3">

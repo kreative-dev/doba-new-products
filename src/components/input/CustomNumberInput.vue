@@ -13,7 +13,7 @@ const emit = defineEmits(['update:modelValue']);
       :min="min"
       step="1"
       :id="inputID"
-      class="w-16"
+      class="w-16 border rounded-sm border-gray-800"
     />
   </div>
 </template>

@@ -29,9 +29,9 @@
   <PanelTemplate>
     <template v-slot:main>
       <CustomSelect v-model="options.pricingToggle" :selectOptions="toggleOptions">Use Automated Pricing?</CustomSelect>
-      <CustomNumberInput v-model="options.pricingValue" :min="0" inputID="pricingValue">Percentage?</CustomNumberInput>
+      <CustomNumberInput v-if="options.pricingToggle === 'Yes'" v-model="options.pricingValue" :min="0" inputID="pricingValue">Percentage?</CustomNumberInput>
       <CustomSelect v-model="options.enabledToggle" :selectOptions="toggleOptions">Use Automated Enabled?</CustomSelect>
-      <CustomNumberInput v-model="options.enabledValue" :min="0" inputID="enabledValue">Enabled Threshold?</CustomNumberInput>
+      <CustomNumberInput v-if="options.enabledToggle === 'Yes'" v-model="options.enabledValue" :min="0" inputID="enabledValue">Enabled Threshold?</CustomNumberInput>
       <CustomSelect v-model="categoriesToggle" :selectOptions="toggleOptions">Use Doba Categories?</CustomSelect>
     </template>
     <template v-slot:buttons>

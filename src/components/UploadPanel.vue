@@ -100,10 +100,10 @@ function submitFile() {
       <div v-if="filteredData.length === 0">
         <label for="file-upload" class="btn-primary">Upload Doba File</label>
         <input id="file-upload" type="file" accept="text/csv" @change="processFile" class="hidden" />
-        <p v-if="error">{{ error }}</p>
+        <p v-if="error" class="border mt-4 bg-red-400/75 px-4 py-1 rounded-md ">{{ error }}</p>
       </div>
       <div v-else>
-        <p class="border border-slate-800/75 rounded-md bg-slate-200 px-4 py-1 w-fit ">{{ fileName }}</p>
+        <p class="border border-slate-800/75 rounded-md bg-slate-200 px-4 py-1 w-fit">{{ fileName }}</p>
       </div>
     </template>
     <template v-slot:buttons v-if="filteredData.length > 0">
