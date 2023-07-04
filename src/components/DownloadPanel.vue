@@ -38,7 +38,7 @@ function saveData(isVariant) {
     }
 
     // only add categories if selected in options and is products
-    if (props.data.options.categoriesToggle == 'Yes' && !isVariant) {
+    if (props.data.options.categoriesToggle === 'Yes' && !isVariant) {
       newProduct.categories = product.categories;
     }
 

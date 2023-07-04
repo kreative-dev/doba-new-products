@@ -32,7 +32,7 @@
       <CustomNumberInput v-if="options.pricingToggle === 'Yes'" v-model="options.pricingValue" :min="0" inputID="pricingValue">Percentage?</CustomNumberInput>
       <CustomSelect v-model="options.enabledToggle" :selectOptions="toggleOptions">Use Automated Enabled?</CustomSelect>
       <CustomNumberInput v-if="options.enabledToggle === 'Yes'" v-model="options.enabledValue" :min="0" inputID="enabledValue">Enabled Threshold?</CustomNumberInput>
-      <CustomSelect v-model="categoriesToggle" :selectOptions="toggleOptions">Use Doba Categories?</CustomSelect>
+      <CustomSelect v-model="options.categoriesToggle" :selectOptions="toggleOptions">Use Doba Categories?</CustomSelect>
     </template>
     <template v-slot:buttons>
   <button @click="changePanel('UploadPanel')" class="btn-primary">Back</button>
