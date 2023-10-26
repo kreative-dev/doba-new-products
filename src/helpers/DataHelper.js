@@ -1,10 +1,10 @@
 const variantNames = [];
 const variantsFound = [];
-const mainVariants = [];
+const firstVariants = [];
 
 export function processData(data) {
   // finalData will be returned back to AppMain
-  let finalData = { productData: [], variantData: [], mainVariants: [] };
+  let finalData = { productData: [], variantData: [], firstVariants: [] };
 
   // Loop through filtered products
   data.filteredData.forEach((product) => {
@@ -17,8 +17,8 @@ export function processData(data) {
   // Add variantsFound to productData list
   finalData.productData = finalData.productData.concat(variantsFound);
 
-  // add main variants to finalData
-  finalData.mainVariants = mainVariants;
+  // add first variants to finalData
+  finalData.firstVariants = firstVariants;
 
   return finalData;
 }
@@ -29,18 +29,18 @@ function checkVariant(product, filteredData) {
     return true;
   }
 
-  // check for a new variant, if found, add relevant data to variantName and variantsFound
+  // check if name occurs more than once in the list, if so, adds data to variantNames, firstVariants, and variantsFound
   if (filteredData.filter((p) => p.name === product.name).length > 1) {
     // add to variantNames so it skips the duplicates
     variantNames.push(product.name);
 
-    // add variant sku to main variants
-    mainVariants.push(product.sku);
+    // add variant sku to firstVariants, so the showInResults option can be set
+    firstVariants.push(product.sku);
 
-    // add empty data to temp variant
+    // add empty data to temp variant, so it matches on the final product spreadsheet
     let tempVariant = {};
 
-    Object.keys(product).forEach((key) => (tempVariant[key] = ''));
+    Object.keys(product).forEach((key) => (tempVariant[key] = ""));
 
     // Add variant data
     tempVariant.name = product.name;

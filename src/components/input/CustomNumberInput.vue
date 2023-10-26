@@ -1,10 +1,10 @@
 <script setup>
-const props = defineProps(['modelValue', 'inputID', 'min']);
-const emit = defineEmits(['update:modelValue']);
+const props = defineProps(["modelValue", "inputID", "min"]);
+const emit = defineEmits(["update:modelValue"]);
 </script>
 
 <template>
-  <div class="flex space-x-10 justify-between w-96">
+  <div class="flex w-96 justify-between space-x-10">
     <label :for="inputID"><slot>Label</slot></label>
     <input
       type="number"
@@ -13,7 +13,7 @@ const emit = defineEmits(['update:modelValue']);
       :min="min"
       step="1"
       :id="inputID"
-      class="w-16 border rounded-sm border-gray-800"
+      class="w-16 rounded-sm border border-gray-800"
     />
   </div>
 </template>

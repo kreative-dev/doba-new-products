@@ -1,10 +1,29 @@
 <script setup>
+const props = defineProps(["inputID", "modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 </script>
 
 <template>
-  <label class="relative inline-flex items-center space-x-10 w-96 justify-between cursor-pointer">
-    <span class="mr-3 text-sm font-medium">Test</span>
-    <input type="checkbox" value="" class="sr-only peer">
-    <div class="w-11 h-6 relative bg-gray-400 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-600"></div>
+  <label
+    class="relative inline-flex cursor-pointer items-center justify-between space-x-4"
+  >
+    <span class=""><slot>Label</slot></span>
+    <label :for="inputId" class="flex cursor-pointer select-none items-center">
+      <div class="relative">
+        <input
+          type="checkbox"
+          :id="inputId"
+          :checked="modelValue"
+          class="peer sr-only"
+          @change="$emit('update:modelValue', $event.target.checked)"
+        />
+        <div
+          class="block h-5 w-10 rounded-full border border-gray-400 bg-gray-200 transition-colors peer-checked:border-gray-600 peer-checked:bg-gray-400"
+        ></div>
+        <div
+          class="dot absolute left-1 top-1 h-3 w-3 rounded-full bg-gray-400 transition-all peer-checked:translate-x-5 peer-checked:bg-slate-600"
+        ></div>
+      </div>
+    </label>
   </label>
 </template>
