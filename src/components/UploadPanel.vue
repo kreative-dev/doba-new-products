@@ -105,9 +105,9 @@ function submitFile() {
   <PanelTemplate>
     <template v-slot:intro>
       <p>
-        This tool can be used to format a Doba Product Feed spreadsheet for
-        Warhead. In most cases, the formatted spreadsheet can be then imported
-        directly into Warhead. For a video on how to use this tool,
+        Test. This tool can be used to format a Doba Product Feed spreadsheet
+        for Warhead. In most cases, the formatted spreadsheet can be then
+        imported directly into Warhead. For a video on how to use this tool,
         <a href="/">click here</a>.
       </p>
       <p>
