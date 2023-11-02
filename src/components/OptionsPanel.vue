@@ -10,9 +10,9 @@ const emit = defineEmits(["changePanel", "submitOptions"]);
 const options = ref({
   pricingToggle: true,
   pricingValue: 25,
-  enabledToggle: "Yes",
+  enabledToggle: true,
   enabledValue: 0,
-  categoriesToggle: "Yes",
+  categoriesToggle: true,
 });
 
 const toggleOptions = ref(["Yes", "No"]);
@@ -32,32 +32,39 @@ function submitOptions(newPanel) {
       <CustomToggle
         v-model="options.pricingToggle"
         inputId="pricingToggle"
-        class="left-32 place-self-start"
+        class="left-80 place-self-start"
         >Use Automated Pricing</CustomToggle
       >
       <CustomNumberInput
-        v-if="options.pricingToggle === true"
+        v-if="options.pricingToggle"
         v-model="options.pricingValue"
         :min="0"
         inputID="pricingValue"
-        >Percentage?</CustomNumberInput
+        class="left-96 place-self-start"
+        >Markup Percentage?</CustomNumberInput
       >
-      <CustomSelect
+
+      <CustomToggle
         v-model="options.enabledToggle"
-        :selectOptions="toggleOptions"
-        >Use Automated Enabled?</CustomSelect
+        inputId="enabledToggle"
+        class="left-80 place-self-start"
+        >Use Automated Enabled</CustomToggle
       >
+
       <CustomNumberInput
-        v-if="options.enabledToggle === 'Yes'"
+        v-if="options.enabledToggle"
         v-model="options.enabledValue"
         :min="0"
         inputID="enabledValue"
+        class="left-96 place-self-start"
         >Enabled Threshold?</CustomNumberInput
       >
-      <CustomSelect
+
+      <CustomToggle
         v-model="options.categoriesToggle"
-        :selectOptions="toggleOptions"
-        >Use Doba Categories?</CustomSelect
+        inputId="categoriesToggle"
+        class="left-80 place-self-start"
+        >Use Doba Categories</CustomToggle
       >
     </template>
     <template v-slot:buttons>

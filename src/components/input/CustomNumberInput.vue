@@ -4,7 +4,7 @@ const emit = defineEmits(["update:modelValue"]);
 </script>
 
 <template>
-  <div class="flex w-96 justify-between space-x-10">
+  <div class="relative flex w-72 justify-between space-x-6">
     <label :for="inputID"><slot>Label</slot></label>
     <input
       type="number"

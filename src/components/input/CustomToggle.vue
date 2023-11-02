@@ -4,10 +4,7 @@ const emit = defineEmits(["update:modelValue"]);
 </script>
 
 <template>
-  <label
-    class="relative inline-flex cursor-pointer items-center justify-between space-x-4"
-  >
-    <span class=""><slot>Label</slot></span>
+  <label class="after:content relative inline-flex cursor-pointer items-center">
     <label :for="inputId" class="flex cursor-pointer select-none items-center">
       <div class="relative">
         <input
@@ -25,5 +22,6 @@ const emit = defineEmits(["update:modelValue"]);
         ></div>
       </div>
     </label>
+    <span class="relative left-2"><slot>Label</slot></span>
   </label>
 </template>

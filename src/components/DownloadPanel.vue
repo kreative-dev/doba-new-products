@@ -38,12 +38,12 @@ function saveData(isVariant) {
     }
 
     // categories - only add categories if selected in options and is products
-    if (props.data.options.categoriesToggle === "Yes" && !isVariant) {
+    if (props.data.options.categoriesToggle && !isVariant) {
       newProduct.categories = product.categories;
     }
 
     // enabled - only do automated enabling if selected in options, otherwise add using 1
-    if (props.data.options.enabledToggle == "Yes" && product.quantity !== "") {
+    if (props.data.options.enabledToggle && product.quantity !== "") {
       newProduct.enabled =
         parseInt(product.quantity) > props.data.options.enabledValue ? 1 : 0;
     } else {
